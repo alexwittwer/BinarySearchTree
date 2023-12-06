@@ -4,7 +4,18 @@ class Tree {
   }
 
   buildTree(arr) {
-    // build tree
+    if (!arr.length) return;
+    const cp = arr.sort(); // make shallow copy of array
+    const mid = Math.round(cp.length / 2 - 1);
+    const leftArray = cp.slice(0, mid);
+    const rightArray = cp.slice(mid + 1);
+    const midValue = cp[mid];
+
+    const root = new Node(cp[mid]);
+    root.left = this.buildTree(leftArray);
+    root.right = this.buildTree(rightArray);
+
+    return root;
   }
 }
 
