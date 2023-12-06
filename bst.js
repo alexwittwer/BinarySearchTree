@@ -4,10 +4,10 @@ class Tree {
   }
 
   buildTree(arr) {
-    if (!arr.length) return;
-    const uniq = [...new Set(arr)] // remove duplicates
-    const cp = uniq.sort(); 
-    
+    if (!arr.length) return null;
+    const uniq = [...new Set(arr)]; // remove duplicates
+    const cp = uniq.sort();
+
     const mid = Math.round(cp.length / 2 - 1);
     const leftArray = cp.slice(0, mid);
     const rightArray = cp.slice(mid + 1);
@@ -21,13 +21,13 @@ class Tree {
   }
 
   add(value) {
-      // adds a value to the tree
+    // adds a value to the tree
   }
 }
 
 class Node {
-  constructor(value = null, left = null, right = null) {
-    this.value = value;
+  constructor(data = null, left = null, right = null) {
+    this.data = data;
     this.left = left;
     this.right = right;
   }
@@ -44,4 +44,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node.left !== null) {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
+
+  return;
 };
+
+const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 4, 3];
+
+const tree = new Tree(array);
+
+prettyPrint(tree.root);
