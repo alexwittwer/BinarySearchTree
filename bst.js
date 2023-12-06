@@ -5,7 +5,9 @@ class Tree {
 
   buildTree(arr) {
     if (!arr.length) return;
-    const cp = arr.sort(); // make shallow copy of array
+    const uniq = [...new Set(arr)] // remove duplicates
+    const cp = uniq.sort(); 
+    
     const mid = Math.round(cp.length / 2 - 1);
     const leftArray = cp.slice(0, mid);
     const rightArray = cp.slice(mid + 1);
@@ -16,6 +18,10 @@ class Tree {
     root.right = this.buildTree(rightArray);
 
     return root;
+  }
+
+  add(value) {
+      // adds a value to the tree
   }
 }
 
