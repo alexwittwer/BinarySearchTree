@@ -80,3 +80,11 @@ const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 4, 3];
 const tree = new Tree(array);
 
 prettyPrint(tree.root);
+
+const button = document.createElement("button");
+button.textContent = "Click to console log the current tree";
+button.addEventListener("click", (e) => {
+  prettyPrint(tree.root);
+});
+
+document.body.append(button);
