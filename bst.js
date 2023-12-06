@@ -44,11 +44,100 @@ class Tree {
     }
   }
 
-  delete(value) {
-    let currentNode = this.root;
-    const q = [];
+  delete(value, node = this.root, parent = null) {
+    if (node === null) {
+      console.log("Error: value not found in tree");
+      return node;
+    }
 
-    while (currentNode !== null) {}
+    if (value > node.data) {
+      this.delete(value, node.right, node);
+    } else if (value < node.data) {
+      this.delete(value, node.left, node);
+    } else if (value === node.data) {
+      // case no children
+      if (node.left === null && node.right === null) {
+        if (parent.right.data === value) {
+          return (parent.right = null);
+        } else {
+          return (parent.left = null);
+        }
+      }
+
+      // case one child
+      else if (node.left === null && node.right !== null) {
+        const successor = node.right;
+        node.data = successor.data;
+        return (node.right = null);
+      } else if (node.right === null && node.left !== null) {
+        const successor = node.left;
+        node.data = successor.node;
+        return (node.left = null);
+      }
+
+      // case both children
+      else if (node.left !== null && node.right !== null) {
+        const successor = this._minValueNode(node.right);
+        node.data = successor.data;
+        return this.delete(successor.data, node.right, node);
+      }
+    }
+  }
+
+  _minValueNode(node) {
+    let currentNode = node;
+    while (currentNode.left !== null) {
+      currentNode = currentNode.left;
+    }
+    return currentNode;
+  }
+
+  find(value) {
+    let currentNode = this.root;
+
+    while (currentNode !== null) {
+      if (value > currentNode.data) {
+        currentNode = currentNode.right;
+      } else if (value < currentNode.data) {
+        currentNode = currentNode.left;
+      } else if (value === currentNode.data) {
+        return currentNode;
+      }
+    }
+
+    throw new Error("Data not in tree");
+  }
+  inorder(node = this.root, arr = []) {
+    let array = arr;
+    if (node !== null) {
+      this.inorder(node.left, array);
+      array.push(node.data);
+      this.inorder(node.right, array);
+    }
+
+    return array;
+  }
+
+  preorder(node = this.root, arr = []) {
+    let array = arr;
+    if (node !== null) {
+      array.push(node.data);
+      this.preorder(node.left, array);
+      this.preorder(node.right, array);
+    }
+
+    return array;
+  }
+
+  postorder(node = this.root, arr = []) {
+    let array = arr;
+    if (node !== null) {
+      this.postorder(node.left, array);
+      this.postorder(node.right, array);
+      array.push(node.data);
+    }
+
+    return array;
   }
 }
 
