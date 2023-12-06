@@ -43,6 +43,13 @@ class Tree {
       }
     }
   }
+
+  delete(value) {
+    let currentNode = this.root;
+    const q = [];
+
+    while (currentNode !== null) {}
+  }
 }
 
 class Node {
