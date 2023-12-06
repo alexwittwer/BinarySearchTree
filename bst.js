@@ -11,7 +11,7 @@ class Tree {
     const rightArray = cp.slice(mid + 1);
     const midValue = cp[mid];
 
-    const root = new Node(cp[mid]);
+    const root = new Node(midValue);
     root.left = this.buildTree(leftArray);
     root.right = this.buildTree(rightArray);
 
