@@ -21,7 +21,27 @@ class Tree {
   }
 
   add(value) {
-    // adds a value to the tree
+    let currentNode = this.root;
+
+    while (currentNode !== null) {
+      if (value > currentNode.data) {
+        if (currentNode.right === null) {
+          currentNode.right = new Node(value);
+          break;
+        } else {
+          currentNode = currentNode.right;
+        }
+      } else if (value < currentNode.data) {
+        if (currentNode.left === null) {
+          currentNode.left = new Node(value);
+          break;
+        } else {
+          currentNode = currentNode.left;
+        }
+      } else if (value === currentNode.data) {
+        break;
+      }
+    }
   }
 }
 
