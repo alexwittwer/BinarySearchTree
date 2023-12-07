@@ -140,6 +140,80 @@ class Tree {
 
     return array;
   }
+    levelorder(callback = null, node = this.root, array = [], q = []) {
+    if (node !== null) {
+      array.push(node);
+
+      if (node.left) {
+        q.push(node.left);
+      }
+
+      if (node.right) {
+        q.push(node.right);
+      }
+
+      if (callback && typeof callback === "function") {
+        callback(node);
+      }
+
+      const nextNode = q.shift();
+
+      if (nextNode !== undefined) {
+        this.levelorder(callback, nextNode, array, q);
+      }
+
+      if (q[0] === undefined) {
+        return array;
+      }
+    }
+  }
+  height(node = this.root) {
+    if (node === null) {
+      return -1;
+    }
+    let heightLeft = this.height(node.left);
+    let heightRight = this.height(node.right);
+
+    if (heightLeft > heightRight) {
+      return heightLeft + 1;
+    } else {
+      return heightRight + 1;
+    }
+  }
+
+  depth(value) {
+    let currentNode = this.root;
+    let count = -1;
+
+    while (currentNode !== null) {
+      count++;
+      if (value > currentNode.data) {
+        currentNode = currentNode.right;
+      } else if (value < currentNode.data) {
+        currentNode = currentNode.left;
+      } else if (value === currentNode.data) {
+        return count;
+      }
+    }
+
+    throw new Error("Data not in tree");
+  }
+  
+  isBalanced() {
+    const left = this.height(this.root.left);
+    const right = this.height(this.root.right);
+    const abs = Math.abs(left - right);
+
+    if (abs > 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  rebalance() {
+    let arr = this.inorder();
+    this.root = this.buildTree(arr);
+  }
 }
 
 class Node {
