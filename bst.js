@@ -55,7 +55,7 @@ class Tree {
     } else if (value === node.data) {
       // case no children
       if (node.left === null && node.right === null) {
-        if (parent.right.data === value) {
+        if (parent.right !== null && parent.right.data === value) {
           parent.right = null;
         } else {
           parent.left = null;
@@ -105,7 +105,6 @@ class Tree {
 
     throw new Error("Data not in tree");
   }
-<<<<<<< HEAD
 
   inorder(callback = null, node = this.root, array = []) {
     if (node !== null) {
@@ -118,21 +117,6 @@ class Tree {
 
       this.inorder(callback, node.right, array);
     }
-
-=======
-  inorder(callback = null, node = this.root, array = []) {
-    if (node !== null) {
-      this.inorder(callback, node.left, array);
-
-      if (callback && typeof callback === "function") {
-        callback(node);
-      }
-      array.push(node.data);
-
-      this.inorder(callback, node.right, array);
-    }
-    
->>>>>>> e3131c38e5d0ddf3669f715c74b4962b468dde15
     if (!callback) {
       return array;
     }
@@ -144,19 +128,11 @@ class Tree {
         callback(node);
       }
       array.push(node.data);
-<<<<<<< HEAD
 
       this.preorder(callback, node.left, array);
       this.preorder(callback, node.right, array);
     }
 
-=======
-
-      this.preorder(callback, node.left, array);
-      this.preorder(callback, node.right, array);
-    }
-    
->>>>>>> e3131c38e5d0ddf3669f715c74b4962b468dde15
     if (!callback) {
       return array;
     }
@@ -171,7 +147,6 @@ class Tree {
       if (callback && typeof callback === "function") {
         callback(node);
       }
-<<<<<<< HEAD
     }
 
     if (!callback) {
@@ -179,7 +154,6 @@ class Tree {
     }
   }
 
-  // TODO
   levelorder(node = this.root, callback = null, returnedArray = [], q = []) {
     if (node !== null) {
       if (callback && typeof callback === "function") {
@@ -206,6 +180,7 @@ class Tree {
       }
     }
   }
+
   height(node = this.root) {
     if (node === null) {
       return -1;
@@ -238,75 +213,6 @@ class Tree {
     throw new Error("Data not in tree");
   }
 
-=======
-    }
-    
-    if (!callback) {
-      return array;
-    }
-  }
-  
-    levelorder(callback = null, node = this.root, array = [], q = []) {
-    if (node !== null) {
-      array.push(node);
-
-      if (node.left) {
-        q.push(node.left);
-      }
-
-      if (node.right) {
-        q.push(node.right);
-      }
-
-      if (callback && typeof callback === "function") {
-        callback(node);
-      }
-
-      const nextNode = q.shift();
-
-      if (nextNode !== undefined) {
-        this.levelorder(callback, nextNode, array, q);
-      }
-
-      if (q[0] === undefined && !callback) {
-        return array;
-      }
-
-    }
-  }
-  height(node = this.root) {
-    if (node === null) {
-      return -1;
-    }
-    let heightLeft = this.height(node.left);
-    let heightRight = this.height(node.right);
-
-    if (heightLeft > heightRight) {
-      return heightLeft + 1;
-    } else {
-      return heightRight + 1;
-    }
-  }
-
-  depth(value) {
-    let currentNode = this.root;
-    let count = -1;
-
-    while (currentNode !== null) {
-      count++;
-      if (value > currentNode.data) {
-        currentNode = currentNode.right;
-      } else if (value < currentNode.data) {
-        currentNode = currentNode.left;
-      } else if (value === currentNode.data) {
-        return count;
-      }
-    }
-
-    throw new Error("Data not in tree");
-  }
-  
->>>>>>> e3131c38e5d0ddf3669f715c74b4962b468dde15
   isBalanced() {
     const left = this.height(this.root.left);
     const right = this.height(this.root.right);
@@ -416,3 +322,6 @@ button.addEventListener("click", (e) => {
 });
 
 document.body.append(button);
+
+tree.add(64);
+tree.delete(64);
