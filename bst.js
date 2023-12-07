@@ -56,9 +56,9 @@ class Tree {
       // case no children
       if (node.left === null && node.right === null) {
         if (parent.right.data === value) {
-          return (parent.right = null);
+          parent.right = null;
         } else {
-          return (parent.left = null);
+          parent.left = null;
         }
       }
 
@@ -66,18 +66,18 @@ class Tree {
       else if (node.left === null && node.right !== null) {
         const successor = node.right;
         node.data = successor.data;
-        return (node.right = null);
+        node.right = null;
       } else if (node.right === null && node.left !== null) {
         const successor = node.left;
         node.data = successor.node;
-        return (node.left = null);
+        node.left = null;
       }
 
       // case both children
       else if (node.left !== null && node.right !== null) {
         const successor = this._minValueNode(node.right);
         node.data = successor.data;
-        return this.delete(successor.data, node.right, node);
+        this.delete(successor.data, node.right, node);
       }
     }
   }
