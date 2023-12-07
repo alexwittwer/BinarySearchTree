@@ -5,13 +5,11 @@ class Tree {
 
   buildTree(arr) {
     if (!arr.length) return null;
-    const uniq = [...new Set(arr)]; // remove duplicates
-    const cp = uniq.sort();
 
-    const mid = Math.round(cp.length / 2 - 1);
-    const leftArray = cp.slice(0, mid);
-    const rightArray = cp.slice(mid + 1);
-    const midValue = cp[mid];
+    const mid = Math.round(arr.length / 2 - 1);
+    const leftArray = arr.slice(0, mid);
+    const rightArray = arr.slice(mid + 1);
+    const midValue = arr[mid];
 
     const root = new Node(midValue);
     root.left = this.buildTree(leftArray);
@@ -165,15 +163,70 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   return;
 };
 
-const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 4, 3];
+function generateArray({ nums, min = 0, range = 100 }) {
+  let array = [];
+
+  for (let i = 0; i < nums; i++) {
+    const randomNumber = Math.round(Math.random() * range + min);
+    array.push(randomNumber);
+  }
+
+  array = [...new Set(array)];
+  array = mergesort(array);
+
+  return array;
+}
+
+function mergesort(array) {
+  if (array.length === 1) {
+    return array;
+  } else {
+    const left = array.slice(0, array.length / 2);
+    const right = array.slice(array.length / 2);
+
+    const sortedLeft = mergesort(left);
+    const sortedRight = mergesort(right);
+
+    return merge(sortedLeft, sortedRight);
+  }
+}
+
+function merge(left, right) {
+  const sortedArray = [];
+
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      sortedArray.push(left.shift());
+    } else {
+      sortedArray.push(right.shift());
+    }
+  }
+
+  while (left.length) {
+    sortedArray.push(left.shift());
+  }
+
+  while (right.length) {
+    sortedArray.push(right.shift());
+  }
+
+  return sortedArray;
+}
+
+const array = generateArray({ nums: 10, min: 0, range: 100 });
 
 const tree = new Tree(array);
+
+const inorderArray = tree.inorder();
+const preorderArray = tree.preorder();
+const postorderArray = tree.postorder();
 
 prettyPrint(tree.root);
 
 const button = document.createElement("button");
 button.textContent = "Click to console log the current tree";
 button.addEventListener("click", (e) => {
+  console.clear();
   prettyPrint(tree.root);
 });
 
