@@ -118,8 +118,10 @@ class Tree {
 
       this.inorder(callback, node.right, array);
     }
-
-    return array;
+    
+    if (!callback) {
+      return array;
+    }
   }
 
   preorder(callback = null, node = this.root, array = []) {
@@ -132,8 +134,10 @@ class Tree {
       this.preorder(callback, node.left, array);
       this.preorder(callback, node.right, array);
     }
-
-    return array;
+    
+    if (!callback) {
+      return array;
+    }
   }
 
   postorder(callback = null, node = this.root, array = []) {
@@ -146,8 +150,10 @@ class Tree {
         callback(node);
       }
     }
-
-    return array;
+    
+    if (!callback) {
+      return array;
+    }
   }
   
     levelorder(callback = null, node = this.root, array = [], q = []) {
@@ -172,9 +178,10 @@ class Tree {
         this.levelorder(callback, nextNode, array, q);
       }
 
-      if (q[0] === undefined) {
+      if (q[0] === undefined && !callback) {
         return array;
       }
+
     }
   }
   height(node = this.root) {
