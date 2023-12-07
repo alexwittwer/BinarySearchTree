@@ -108,6 +108,7 @@ class Tree {
     throw new Error("Data not in tree");
   }
 
+  // TODO: update with callback functionality
   inorder(node = this.root, arr = []) {
     let array = arr;
     if (node !== null) {
