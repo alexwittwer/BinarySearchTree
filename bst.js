@@ -106,38 +106,57 @@ class Tree {
     throw new Error("Data not in tree");
   }
 
-  inorder(node = this.root, arr = []) {
-    let array = arr;
+  // TODO: Make order's accept callbacks
+  inorder(node = this.root, callback = null, array = []) {
     if (node !== null) {
-      this.inorder(node.left, array);
-      array.push(node.data);
-      this.inorder(node.right, array);
+      if (callback && typeof callback === "function") {
+        callback(node);
+      }
+      this.inorder(node.left, callback, array);
+      array.push(node);
+      this.inorder(node.right, callback, array);
     }
 
-    return array;
+    if (callback === null) {
+      return array;
+    }
   }
 
-  preorder(node = this.root, arr = []) {
-    let array = arr;
+  preorder(node = this.root, callback = null, array = []) {
     if (node !== null) {
-      array.push(node.data);
-      this.preorder(node.left, array);
-      this.preorder(node.right, array);
+      if (callback && typeof callback === "function") {
+        callback(node);
+      }
+      array.push(node);
+      this.preorder(node.left, callback, array);
+      this.preorder(node.right, callback, array);
     }
 
-    return array;
+    if (callback === null) {
+      return array;
+    }
   }
 
-  postorder(node = this.root, arr = []) {
-    let array = arr;
+  postorder(node = this.root, callback = null, array = []) {
     if (node !== null) {
-      this.postorder(node.left, array);
-      this.postorder(node.right, array);
-      array.push(node.data);
+      if (callback && typeof callback === "function") {
+        callback(node);
+      }
+      this.postorder(node.left, callback, array);
+      this.postorder(node.right, callback, array);
+      array.push(node);
     }
 
-    return array;
+    if (callback === null) {
+      return array;
+    }
   }
+
+  // TODO
+  height(node) {}
+  depth(node) {}
+  isBalanced(root = this.root) {}
+  rebalance() {}
 }
 
 class Node {
