@@ -108,39 +108,35 @@ class Tree {
     throw new Error("Data not in tree");
   }
 
-  // TODO: update with callback functionality
-  inorder(node = this.root, arr = []) {
+  preorder(node = this.root, arr = [], callback = null) {
     let array = arr;
+    if (callback && typeof callback === "function"){
+      callback(node)
+    }
+
     if (node !== null) {
-      this.inorder(node.left, array);
       array.push(node.data);
-      this.inorder(node.right, array);
+      this.preorder(node.left, array, callback);
+      this.preorder(node.right, array, callback);
     }
 
     return array;
   }
 
-  preorder(node = this.root, arr = []) {
+  postorder(node = this.root, arr = [], callback = null) {
     let array = arr;
-    if (node !== null) {
-      array.push(node.data);
-      this.preorder(node.left, array);
-      this.preorder(node.right, array);
+    if (callback && typeof callback === "function"){
+      callback(node)
     }
-
-    return array;
-  }
-
-  postorder(node = this.root, arr = []) {
-    let array = arr;
     if (node !== null) {
-      this.postorder(node.left, array);
-      this.postorder(node.right, array);
+      this.postorder(node.left, array, callback);
+      this.postorder(node.right, array, callback);
       array.push(node.data);
     }
 
     return array;
   }
+  
     levelorder(callback = null, node = this.root, array = [], q = []) {
     if (node !== null) {
       array.push(node);
